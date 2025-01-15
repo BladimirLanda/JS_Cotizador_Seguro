@@ -33,14 +33,9 @@ Seguro.prototype.cotizarSeguro = function() {
     case '3':
         cantidad = base * 1.35;
         break;
-    default:
-        break;
    }
 
-    /*
-    AÑO:
-    Por cada año más antiguo se restará un 3% de la cantidad base
-    */
+    //AÑO:Por cada año más antiguo se restará un 3% de la cantidad base
     const diferencia = new Date().getFullYear() - this.year;
     cantidad -= ((diferencia * 3) * cantidad) / 100;
 
@@ -58,12 +53,11 @@ Seguro.prototype.cotizarSeguro = function() {
 }
 
 //--//
-function InterfaceUser() {
-}
+function InterfaceUser() { }
 
 InterfaceUser.prototype.llenarOpciones = function() {
     const max = new Date().getFullYear();
-    const min = max - 14;
+    const min = max - 15;
 
     for (let i = max; i >= min; i--) {
         let option = document.createElement('option');
@@ -74,26 +68,26 @@ InterfaceUser.prototype.llenarOpciones = function() {
 }
 
 InterfaceUser.prototype.mostrarMensaje = function(mensaje, tipo) {
-    const div = document.createElement('div');
+    const divMsg = document.createElement('div');
 
     if(tipo === 'error') {
-        div.classList.add('error');
+        divMsg.classList.add('error');
     } else {
-        div.classList.add('correcto');
+        divMsg.classList.add('correcto');
     }
 
-    div.classList.add('mensaje', 'mt-10'); //Taiwling mt: margin-top
-    div.textContent = mensaje;
+    divMsg.classList.add('mensaje', 'mt-10');
+    divMsg.textContent = mensaje;
 
-    formulario.insertBefore(div, document.querySelector('#resultado'));
+    formulario.insertBefore(divMsg, document.querySelector('#resultado'));
 
     setTimeout(() => {
-        div.remove();
+        divMsg.remove();
     }, 2000);
 }
 
 InterfaceUser.prototype.mostrarResultado = function(seguro, total) {
-    const {marca, year, tipo} = seguro;
+    const { marca, year, tipo } = seguro;
     let marcaText;
 
     switch(marca) {
@@ -105,15 +99,13 @@ InterfaceUser.prototype.mostrarResultado = function(seguro, total) {
             break;
         case "3":
             marcaText = "Europeo";
-            break
-        default:
             break;
     }
 
-    const div = document.createElement('div');
-    div.classList.add('mt-10');
+    const divResult = document.createElement('div');
+    divResult.classList.add('mt-10');
 
-    div.innerHTML = `
+    divResult.innerHTML = `
         <p class="header">Tu Cotización</p>
         <p class="font-bold">Marca: <span class="font-normal">${marcaText}</span> </p>
         <p class="font-bold">Año: <span class="font-normal">${year}</span> </p>
@@ -125,7 +117,7 @@ InterfaceUser.prototype.mostrarResultado = function(seguro, total) {
 
     setTimeout(() => {
         spinner.classList.add("hidden");
-        resultadoCoti.appendChild(div);
+        resultadoCoti.appendChild(divResult);
     }, 2000)
 }
 
